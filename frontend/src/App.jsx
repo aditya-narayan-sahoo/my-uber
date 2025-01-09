@@ -1,7 +1,21 @@
+import { Route, Routes } from "react-router-dom";
+
+import Start from "./pages/Start";
+import UserLogin from "./pages/UserLogin";
+import UserSignUp from "./pages/UserSignUp";
+import Captainlogin from "./pages/CaptainLogin";
+import CaptainSignup from "./pages/CaptainSignUp";
+
 const App = () => {
   return (
-    <div className="text-center text-3xl h-screen bg-gray-600 text-white">
-      Uber Frontend
+    <div>
+      <Routes>
+        <Route path="/" element={<Start />} />
+        <Route path="/login" element={<UserLogin />} />
+        <Route path="/signup" element={<UserSignUp />} />
+        <Route path="/captain-login" element={<Captainlogin />} />
+        <Route path="/captain-signup" element={<CaptainSignup />} />
+      </Routes>
     </div>
   );
 };
