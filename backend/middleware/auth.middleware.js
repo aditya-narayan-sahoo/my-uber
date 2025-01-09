@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import User from "../models/user.model.js";
 import BlacklistToken from "../models/blacklistToken.model.js";
+import Captain from "../models/captain.model.js";
 
 /**
  * Authenticates a user using the token provided in the request headers or cookies
