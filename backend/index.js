@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import { connectDB } from "./config/mongodb.js";
 
 import userRoutes from "./routes/user.route.js";
+import captainRoutes from "./routes/captain.route.js";
 
 dotenv.config();
 const PORT = process.env.PORT || 5432;
@@ -19,6 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 connectDB();
 
 app.use("/users", userRoutes);
+app.use("/captains", captainRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on  http://localhost:${PORT}`);
