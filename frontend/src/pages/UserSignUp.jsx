@@ -9,7 +9,7 @@ const UserSignUp = () => {
   const [userData, setUserData] = useState({});
   const submitHandler = (e) => {
     e.preventDefault();
-    setUserData({ username: { firstName, lastName }, email, password });
+    setUserData({ fullName: { firstName, lastName }, email, password });
     console.log(userData);
     setFirstName("");
     setLastName("");
