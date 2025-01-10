@@ -56,8 +56,7 @@ export const loginCaptain = async (req, res) => {
     }
     const { email, password } = req.body;
     const captain = await Captain.findOne({ email }).select("+password");
-    const isValidPassword = await captain.comparePassword(password);
-    if (!captain || !isValidPassword) {
+    if (!captain || !(await captain.comparePassword(password))) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
     const token = captain.generateAuthToken();

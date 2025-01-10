@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 import { LOGO } from "../utils/constants";
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -12,21 +13,26 @@ const UserLogin = () => {
   const { setUser } = useContext(UserDataContext);
 
   const submitHandler = async (e) => {
-    e.preventDefault();
-    const userData = { email, password };
-    const response = await axios.post(
-      `${import.meta.env.VITE_BASE_URL}/users/login`,
-      userData
-    );
-    if (response.status === 200) {
-      const data = response.data;
-      setUser(data.user);
-      localStorage.setItem("token", data.token);
-      navigate("/home");
+    try {
+      e.preventDefault();
+      const userData = { email, password };
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/users/login`,
+        userData
+      );
+      if (response.status === 200) {
+        const data = response.data;
+        setUser(data.user);
+        localStorage.setItem("token", data.token);
+        navigate("/home");
+      }
+    } catch (error) {
+      toast.error(error?.response?.data?.message);
     }
     setEmail("");
     setPassword("");
   };
+
   return (
     <div className="p-7 h-screen flex flex-col justify-between">
       <div>

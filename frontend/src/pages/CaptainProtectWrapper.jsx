@@ -27,10 +27,7 @@ const CaptainProtectWrapper = ({ children }) => {
         }
       })
       .catch((err) => {
-        toast.error(err?.response?.data?.message, {
-          position: "top-center",
-          autoClose: 2500,
-        });
+        toast.error(err?.response?.data?.message);
         localStorage.removeItem("captain-token");
         navigate("/captain-login");
       });

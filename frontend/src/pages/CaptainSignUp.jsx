@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 import { useState, useContext } from "react";
 import { UBER_DRIVER } from "../utils/constants";
 import { Link, useNavigate } from "react-router-dom";
@@ -19,27 +20,35 @@ const CaptainSignUp = () => {
   const { setCaptain } = useContext(CaptainDataContext);
 
   const submitHandler = async (e) => {
-    e.preventDefault();
-    const captainData = {
-      fullName: { firstName, lastName },
-      email: email,
-      password: password,
-      vehicle: {
-        color: vehicleColor,
-        plate: vehiclePlate,
-        capacity: vehicleCapacity,
-        vehicleType,
-      },
-    };
-    const response = await axios.post(
-      `${import.meta.env.VITE_BASE_URL}/captains/register`,
-      captainData
-    );
-    if (response.status === 201) {
-      const data = response.data;
-      setCaptain(data.captain);
-      localStorage.setItem("captain-token", data.token);
-      navigate("/captain-home");
+    try {
+      e.preventDefault();
+      const captainData = {
+        fullName: { firstName, lastName },
+        email: email,
+        password: password,
+        vehicle: {
+          color: vehicleColor,
+          plate: vehiclePlate,
+          capacity: vehicleCapacity,
+          vehicleType,
+        },
+      };
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/captains/register`,
+        captainData
+      );
+      if (response.status === 201) {
+        const data = response.data;
+        setCaptain(data.captain);
+        localStorage.setItem("captain-token", data.token);
+        navigate("/captain-home");
+      }
+    } catch (error) {
+      if (error?.response?.data?.errors?.length) {
+        error.response.data.errors.forEach((err) => {
+          toast.error(err.msg);
+        });
+      }
     }
     setEmail("");
     setFirstName("");

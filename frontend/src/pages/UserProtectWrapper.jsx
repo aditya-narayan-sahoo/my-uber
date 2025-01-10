@@ -36,10 +36,7 @@ const UserProtectWrapper = ({ children }) => {
         }
       })
       .catch((error) => {
-        toast.error(error?.response?.data?.message, {
-          position: "top-center",
-          autoClose: 2500,
-        });
+        toast.error(error?.response?.data?.message);
         localStorage.removeItem("token");
         navigate("/login");
       });

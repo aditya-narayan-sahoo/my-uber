@@ -17,7 +17,11 @@ import CaptainProtectWrapper from "./pages/CaptainProtectWrapper";
 const App = () => {
   return (
     <div>
-      <ToastContainer />
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        style={{ fontFamily: "Inter, sans-serif" }}
+      />
       <Routes>
         <Route path="/" element={<Start />} />
         <Route path="/login" element={<UserLogin />} />

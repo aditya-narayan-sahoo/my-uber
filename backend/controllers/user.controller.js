@@ -45,8 +45,7 @@ export const loginUser = async (req, res) => {
     }
     const { email, password } = req.body;
     const user = await User.findOne({ email }).select("+password");
-    const isValidPassword = await user.comparePassword(password);
-    if (!user || !isValidPassword) {
+    if (!user || !(await user.comparePassword(password))) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
     const token = user.generateAuthToken();

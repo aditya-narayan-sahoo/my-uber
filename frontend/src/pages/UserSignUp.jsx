@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 import { LOGO } from "../utils/constants";
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -14,24 +15,32 @@ const UserSignUp = () => {
   const { setUser } = useContext(UserDataContext);
 
   const submitHandler = async (e) => {
-    e.preventDefault();
-    const newUser = {
-      fullName: {
-        firstName: firstName,
-        lastName: lastName,
-      },
-      email: email,
-      password: password,
-    };
-    const response = await axios.post(
-      `${import.meta.env.VITE_BASE_URL}/users/register`,
-      newUser
-    );
-    if (response.status === 201) {
-      const data = response.data;
-      setUser(data.user);
-      localStorage.setItem("token", data.token);
-      navigate("/home");
+    try {
+      e.preventDefault();
+      const newUser = {
+        fullName: {
+          firstName: firstName,
+          lastName: lastName,
+        },
+        email: email,
+        password: password,
+      };
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/users/register`,
+        newUser
+      );
+      if (response.status === 201) {
+        const data = response.data;
+        setUser(data.user);
+        localStorage.setItem("token", data.token);
+        navigate("/home");
+      }
+    } catch (error) {
+      if (error?.response?.data?.errors?.length) {
+        error.response.data.errors.forEach((err) => {
+          toast.error(err.msg);
+        });
+      }
     }
     setFirstName("");
     setLastName("");
