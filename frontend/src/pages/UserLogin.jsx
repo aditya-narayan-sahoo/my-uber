@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { LOGIN_LOGO } from "../utils/constants";
+import { LOGO } from "../utils/constants";
 
 const UserLogin = () => {
   const [email, setEmail] = useState("");
@@ -16,7 +16,7 @@ const UserLogin = () => {
   return (
     <div className="p-7 h-screen flex flex-col justify-between">
       <div>
-        <img className="w-16 mb-10" src={LOGIN_LOGO} alt="" />
+        <img className="w-16 mb-10" src={LOGO} alt="" />
         <form
           onSubmit={(e) => {
             submitHandler(e);
