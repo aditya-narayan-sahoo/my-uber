@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { CaptainDataContext } from "../context/CaptainContext";
@@ -26,7 +27,10 @@ const CaptainProtectWrapper = ({ children }) => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        toast.error(err?.response?.data?.message, {
+          position: "top-center",
+          autoClose: 2500,
+        });
         localStorage.removeItem("token");
         navigate("/captain-login");
       });
