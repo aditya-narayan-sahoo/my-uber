@@ -18,23 +18,20 @@ const CaptainSignUp = () => {
   const navigate = useNavigate();
   const { setCaptain } = useContext(CaptainDataContext);
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
     const captainData = {
-      fullName: {
-        firstname: firstName,
-        lastname: lastName,
-      },
+      fullName: { firstName, lastName },
       email: email,
       password: password,
       vehicle: {
         color: vehicleColor,
         plate: vehiclePlate,
         capacity: vehicleCapacity,
-        vehicleType: vehicleType,
+        vehicleType,
       },
     };
-    const response = axios.post(
+    const response = await axios.post(
       `${import.meta.env.VITE_BASE_URL}/captains/register`,
       captainData
     );
@@ -161,8 +158,8 @@ const CaptainSignUp = () => {
                 Select Vehicle Type
               </option>
               <option value="car">Car</option>
-              <option value="auto">Auto</option>
               <option value="moto">Moto</option>
+              <option value="auto">Auto</option>
             </select>
           </div>
 
