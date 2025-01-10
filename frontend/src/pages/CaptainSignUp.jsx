@@ -1,16 +1,23 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import axios from "axios";
+import { useState, useContext } from "react";
 import { UBER_DRIVER } from "../utils/constants";
+import { Link, useNavigate } from "react-router-dom";
+import { CaptainDataContext } from "../context/CaptainContext";
 
 const CaptainSignUp = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+  const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+
+  const [vehicleType, setVehicleType] = useState("");
   const [vehicleColor, setVehicleColor] = useState("");
   const [vehiclePlate, setVehiclePlate] = useState("");
   const [vehicleCapacity, setVehicleCapacity] = useState("");
-  const [vehicleType, setVehicleType] = useState("");
+
+  const navigate = useNavigate();
+  const { setCaptain } = useContext(CaptainDataContext);
+
   const submitHandler = (e) => {
     e.preventDefault();
     const captainData = {
@@ -27,7 +34,16 @@ const CaptainSignUp = () => {
         vehicleType: vehicleType,
       },
     };
-    console.log(captainData);
+    const response = axios.post(
+      `${import.meta.env.VITE_BASE_URL}/captains/register`,
+      captainData
+    );
+    if (response.status === 201) {
+      const data = response.data;
+      setCaptain(data.captain);
+      localStorage.setItem("token", data.token);
+      navigate("/captain-home");
+    }
     setEmail("");
     setFirstName("");
     setLastName("");
